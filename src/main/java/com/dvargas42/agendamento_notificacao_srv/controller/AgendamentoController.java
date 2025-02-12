@@ -5,10 +5,7 @@ import com.dvargas42.agendamento_notificacao_srv.controller.dto.in.AgendamentoIn
 import com.dvargas42.agendamento_notificacao_srv.controller.dto.out.AgendamentoOutRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +17,10 @@ public class AgendamentoController {
     @PostMapping
     public ResponseEntity<AgendamentoOutRecord> gravarAgendamento(@RequestBody AgendamentoInRecord agendamentoInRecord) {
         return ResponseEntity.ok(agendamentoService.gravarAgendamento(agendamentoInRecord));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AgendamentoOutRecord> buscarAgendamentoPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(agendamentoService.buscarAgendamentoPorId(id));
     }
 }
