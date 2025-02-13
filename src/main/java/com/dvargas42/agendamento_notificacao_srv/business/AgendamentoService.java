@@ -3,6 +3,7 @@ package com.dvargas42.agendamento_notificacao_srv.business;
 import com.dvargas42.agendamento_notificacao_srv.business.mapper.IAgendamentoMapper;
 import com.dvargas42.agendamento_notificacao_srv.controller.dto.in.AgendamentoInRecord;
 import com.dvargas42.agendamento_notificacao_srv.controller.dto.out.AgendamentoOutRecord;
+import com.dvargas42.agendamento_notificacao_srv.infrastructure.entities.Agendamento;
 import com.dvargas42.agendamento_notificacao_srv.infrastructure.exception.NotFoundException;
 import com.dvargas42.agendamento_notificacao_srv.infrastructure.repositories.AgendamentoRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,12 @@ public class AgendamentoService {
         return agendamentoMapper.paraOut(
                 repository.findById(id)
                         .orElseThrow(() -> new NotFoundException("Id não encontrado")));
+    }
+
+    public void cancelarAgendamento(Long id) {
+        Agendamento agendamento = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Id encontrado"));
+
+        repository.save(agendamentoMapper.paraEntityCancelamento(agendamento));
     }
 }
